@@ -1,0 +1,108 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Banner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #222;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #000;
+        }
+
+        .image-preview {
+            display: block;
+            margin: 10px auto;
+            max-width: 100px;
+            border-radius: 4px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007BFF;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Banner</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label>Current Image:</label>
+        <img src="{{ banner.image.url }}" class="image-preview"><br>
+        
+        <label>Upload New Image:</label>
+        <input type="file" name="image" required>
+        
+        <button type="submit">Update</button>
+    </form>
+    
+    <a href="{% url 'banner_list' %}" class="back-link">Back to List</a>
+</body>
+</html>
+{% endblock %}

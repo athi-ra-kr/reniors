@@ -1,0 +1,206 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="robots" content="noindex">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form {
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    select, input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    button {
+        background-color: #222;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #000;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .form-col {
+        flex: 1;
+    }
+
+    .video-input-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .remove-btn {
+        background: #b30000;
+        color: white;
+        border: none;
+        padding: 5px 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    .remove-btn:hover {
+        background: #800000;
+    }
+
+    small {
+        color: #666;
+        font-size: 12px;
+        display: block;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+
+    #add-video-btn {
+        background: #444;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #add-video-btn:hover {
+        background: #333;
+    }
+</style>
+
+<form id="facilityForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <h2>Create Facility</h2>
+    
+    <label for="name">Facility Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <div class="form-row">
+        <div class="form-col">
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-col">
+            <label for="state">State:</label>
+            <select id="state" name="state" required>
+                <option value="">Select State</option>
+                {% for state in states %}
+                <option value="{{ state.id }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-col">
+            <label for="district">District:</label>
+            <select id="district" name="district" required>
+                <option value="">Select District</option>
+                {% for district in districts %}
+                <option value="{{ district.id }}">{{ district.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-col">
+            <label for="city">City:</label>
+            <select id="city" name="city" required>
+                <option value="">Select City</option>
+                {% for city in cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description"></textarea>
+
+    <label for="images">Upload Images (Max 10):</label>
+    <input type="file" id="images" name="images[]" multiple accept="image/*">
+    <small>Maximum 10 images allowed.</small>
+
+    <label>Video Links (Max 10):</label>
+    <div id="video-inputs-container"></div>
+    <button type="button" id="add-video-btn" onclick="addVideoInput()">Add Video Link</button>
+
+    <button type="submit">Create Facility</button>
+</form>
+
+<script>
+    function addVideoInput() {
+        const container = document.getElementById('video-inputs-container');
+        if (container.children.length >= 10) {
+            alert('Maximum 10 video links allowed');
+            return;
+        }
+        const newInput = document.createElement('div');
+        newInput.className = 'video-input-container';
+        newInput.innerHTML = `
+            <input type="text" name="videos[]" placeholder="Enter video URL">
+            <button type="button" class="remove-btn" onclick="removeVideoInput(this)">✕</button>
+        `;
+        container.appendChild(newInput);
+    }
+
+    function removeVideoInput(button) {
+        button.parentElement.remove();
+    }
+</script>
+
+{% endblock %}

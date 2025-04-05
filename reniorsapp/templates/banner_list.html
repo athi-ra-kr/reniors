@@ -1,0 +1,124 @@
+{% extends 'adminpannel.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        margin: 0;
+        padding: 20px;
+    }
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #333333;
+        text-align: center;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .add-btn {
+        text-decoration: none;
+        background-color: #333333;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 50%;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s;
+    }
+    .add-btn:hover {
+        opacity: 0.8;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+    }
+    th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+    }
+    th:last-child, td:last-child {
+        border-right: none;
+    }
+    tr:last-child td {
+        border-bottom: none;
+    }
+    .actions {
+        text-align: center;
+    }
+    .action-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .action-btn {
+        text-decoration: none;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 4px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    .edit-btn {
+        color: #007bff;
+    }
+    .delete-btn {
+        color: #ff0000;
+    }
+    img {
+        width: 100px;
+        border-radius: 4px;
+    }
+</style>
+
+<h2>
+    Banner List
+    <a href="{% url 'add_banner' %}" class="add-btn">+</a>
+</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th class="actions">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for banner in banners %}
+        <tr>
+            <td><img src="{{ banner.image.url }}" alt="Banner"></td>
+            <td class="actions">
+                <div class="action-container">
+                    <a href="{% url 'edit_banner' banner.id %}" class="action-btn edit-btn">📝</a>
+                    <a href="{% url 'delete_banner' banner.id %}" class="action-btn delete-btn" onclick="return confirm('Are you sure?')">❌</a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2" style="text-align: center; padding: 20px;">No banners added yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

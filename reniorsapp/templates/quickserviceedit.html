@@ -1,0 +1,101 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="robots" content="noindex">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Quick Service</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #333333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        img {
+            width: 100px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: block;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #333333;
+            font-weight: bold;
+        }
+      
+        
+        /* Remove underline from left sidebar update option */
+        .sidebar .active {
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Quick Service</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Service Name:</label>
+        <input type="text" name="name" value="{{ service.name }}" required>
+
+        <label for="image">Upload New Image:</label>
+        <input type="file" name="image">
+
+        {% if service.image %}
+            <p>Current Image:</p>
+            <img src="{{ service.image.url }}" alt="{{ service.name }}">
+        {% endif %}
+
+        <button type="submit">Update</button>
+    </form>
+    <a href="{% url 'list_quick_services' %}">Back to List</a>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="robots" content="noindex">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form {
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    button {
+        background-color: #222;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #000;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <h2>Add Package</h2>
+    
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="details">Details:</label>
+    <textarea id="details" name="details" required></textarea>
+    
+    <label for="price">Price:</label>
+    <input type="number" id="price" step="0.01" name="price" required>
+
+    <button type="submit">Add Package</button>
+</form>
+
+{% endblock %}

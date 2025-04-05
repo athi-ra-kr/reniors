@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reniors Admin Panel</title>
+    <meta name="robots" content="noindex">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Block mobile view */
+        @media (max-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                background-color: #ffffff;
+            }
+            .mobile-block {
+                display: block;
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+                color: red;
+                padding: 20px;
+            }
+            .container {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-block {
+                display: none;
+            }
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #ffffff;
+            color: #000000;
+            align-items: flex-start;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            flex-wrap: nowrap;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
+            background: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 150px;
+        }
+
+        .menu-item {
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #000;
+            border-radius: 8px;
+            background: #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: #d6d6d6;
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown .menu-item {
+            background: #f0f0f0;
+        }
+
+        .dropdown .menu-item:hover {
+            background: #e0e0e0;
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8f8f8;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #e0e0e0;
+            color: #000;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .logout-btn:hover {
+            background: #d6d6d6;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin: 20px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Block Mobile Devices -->
+    <div class="mobile-block">
+        This application is not available on mobile devices.
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <img src="{% static 'images/2.png' %}" alt="Reniors Logo" class="logo">
+            </div>
+            <a href="/list_facilities/" class="menu-item" id="facilities"><i class="fas fa-flag"></i> Facilities</a>
+            <a href="/quickservice/list/" class="menu-item"><i class="fas fa-concierge-bell"></i> Quick Service</a>
+            <a href="/package/list/" class="menu-item"><i class="fas fa-box"></i> Packages</a>
+            <a href="/country/list/" class="menu-item"><i class="fas fa-globe"></i> Country</a>
+            <a href="/state/list/" class="menu-item"><i class="fas fa-map-marker-alt"></i> State</a>
+            <a href="/district/list/" class="menu-item"><i class="fas fa-city"></i> District</a>
+            <a href="/city/list/" class="menu-item"><i class="fas fa-building"></i> City</a>
+
+            <a href="#" class="menu-item" onclick="toggleDropdown(event, 'enquiryDropdown')">
+                <i class="fas fa-envelope"></i> Enquiry <i class="fas fa-chevron-down" style="margin-left:auto;"></i>
+            </a>
+            <div class="dropdown" id="enquiryDropdown">
+                <a href="/quickservice-enquiry/list/" class="menu-item"><i class="fas fa-concierge-bell"></i> Quick Service Enquiry</a>
+                <a href="/facility-enquiry/list/" class="menu-item"><i class="fas fa-flag"></i> Facility Enquiry</a>
+                <a href="/package-enquiry/list/" class="menu-item"><i class="fas fa-box"></i> Package Enquiry</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <div class="top-bar">
+                <h2>Admin Panel</h2>
+                <a href="/admin-logout/" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            <div class="content">
+                {% block content %}
+                <h2>Dynamic Data</h2>
+                <button onclick="addData()">Add Data</button>
+                <div id="data-container"></div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            let dropdown = document.getElementById(dropdownId);
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        function setActiveMenu() {
+            let currentPath = window.location.pathname;
+            let menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", setActiveMenu);
+    </script>
+</body>
+</html>

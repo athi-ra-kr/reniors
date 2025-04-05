@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Service Enquiries Report</title>
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <h1>Quick Service Enquiries Report</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>District</th>
+                <th>City</th>
+                <th>Quick Service</th>
+                <th>Enquiry Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enquiry in quick_service_enquiries %}
+                <tr>
+                    <td>{{ enquiry.name }}</td>
+                    <td>{{ enquiry.email }}</td>
+                    <td>{{ enquiry.mobile_number }}</td>
+                    <td>{{ enquiry.country.name }}</td>
+                    <td>{{ enquiry.state.name }}</td>
+                    <td>{{ enquiry.district.name }}</td>
+                    <td>{{ enquiry.city.name }}</td>
+                    <td>{{ enquiry.quick_service.name }}</td>
+                    <td>{{ enquiry.enquiry_date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

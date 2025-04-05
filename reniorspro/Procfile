@@ -1,0 +1,1 @@
+web: gunicorn reniorspro.wsgi --log-file -

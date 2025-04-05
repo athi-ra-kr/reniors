@@ -1,0 +1,123 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="robots" content="noindex">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form {
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #222;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #000;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2>{% if enquiry %}Edit{% else %}Add{% endif %} Facility Enquiry</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{% if enquiry %}{{ enquiry.name }}{% endif %}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{% if enquiry %}{{ enquiry.email }}{% endif %}" required>
+
+        <label for="mobile_number">Mobile Number:</label>
+        <input type="text" id="mobile_number" name="mobile_number" value="{% if enquiry %}{{ enquiry.mobile_number }}{% endif %}" required>
+
+        <label for="facility">Facility:</label>
+        <select id="facility" name="facility" required>
+            {% for facility in facilities %}
+                <option value="{{ facility.id }}" {% if enquiry and enquiry.facility.id == facility.id %}selected{% endif %}>{{ facility.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option value="">Select Country</option>
+            {% for country in countries %}
+                <option value="{{ country.id }}" {% if enquiry and enquiry.country.id == country.id %}selected{% endif %}>{{ country.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="state">State:</label>
+        <select id="state" name="state">
+            <option value="">Select State</option>
+            {% for state in states %}
+                <option value="{{ state.id }}" {% if enquiry and enquiry.state.id == state.id %}selected{% endif %}>{{ state.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="district">District:</label>
+        <select id="district" name="district">
+            <option value="">Select District</option>
+            {% for district in districts %}
+                <option value="{{ district.id }}" {% if enquiry and enquiry.district.id == district.id %}selected{% endif %}>{{ district.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="city">City:</label>
+        <select id="city" name="city">
+            <option value="">Select City</option>
+            {% for city in cities %}
+                <option value="{{ city.id }}" {% if enquiry and enquiry.city.id == city.id %}selected{% endif %}>{{ city.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">{% if enquiry %}Update{% else %}Add{% endif %} Enquiry</button>
+    </form>
+</div>
+
+{% endblock %}

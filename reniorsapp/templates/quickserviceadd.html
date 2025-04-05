@@ -1,0 +1,106 @@
+{% extends "adminpannel.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="robots" content="noindex">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333333;
+        text-align: center;
+    }
+
+    form {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dddddd;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333333;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #333333;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    a {
+        display: block;
+        margin-top: 15px;
+        text-align: center;
+        text-decoration: none; /* Removes underline */
+        color: #333333;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: none; /* Ensures underline does not appear on hover */
+    }
+
+    /* Sidebar links */
+    .sidebar-link {
+        text-decoration: none !important; /* Forces removal of underline */
+        color: inherit; /* Keeps text color consistent */
+    }
+
+    .sidebar-link:hover {
+        text-decoration: none !important;
+    }
+</style>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <h2>Add Quick Service</h2>
+    
+    <label for="name">Service Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="image">Upload Image:</label>
+    <input type="file" id="image" name="image">
+
+    <button type="submit">Add Quick Service</button>
+    <a href="{% url 'list_quick_services' %}" class="sidebar-link">Back to List</a>
+</form>
+{% endblock %}
